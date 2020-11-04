@@ -11,7 +11,7 @@
     const redirectUri = window.location.href;
 
     // Set Genesys Cloud objects
-    const platformClient = require('platformClient');
+    //const platformClient = require('platformClient');
     const client = platformClient.ApiClient.instance;
     const conversationsApi = new platformClient.ConversationsApi();
     const notificationsApi = new platformClient.NotificationsApi();
@@ -45,7 +45,7 @@
             success: function(data) {
                 console.log(data);
                 console.log("------------- VERSION 1");
-                console.log("----------------USUARIO ACTUAL: " + data.name);
+                console.log("---------------- USUARIO ACTUAL: " + data.name);
             }
         });
 
