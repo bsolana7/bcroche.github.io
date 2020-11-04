@@ -3,6 +3,27 @@
 <head>
     <script src='//code.jquery.com/jquery-1.11.2.min.js'></script>
     <script>
+    var global_token;
+
+    const clientId = "31d75368-aa62-4ca8-b7e9-c939b1308c9b";
+    const redirectUri = window.location.href;
+
+    // Set Genesys Cloud objects
+    const platformClient = require('platformClient');
+    const client = platformClient.ApiClient.instance;
+    const conversationsApi = new platformClient.ConversationsApi();
+    const notificationsApi = new platformClient.NotificationsApi();
+    const usersApi = new platformClient.UsersApi();
+
+    // Set Genesys Cloud settings
+    client.setEnvironment('mypurecloud.com');
+    client.setPersistSettings(true, 'test_app');
+
+    // Set local vars
+    let CONVERSATION_LIST_TEMPLATE = null;
+    let conversationList = {};
+    let me, webSocket, conversationsTopic, notificationChannel;
+
     function getParameterByName(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\#&]" + name + "=([^&#]*)"),
@@ -13,6 +34,7 @@
     if(window.location.hash) {
         console.log(location.hash);
         var token = getParameterByName('access_token');
+        global_token= token;
 
         $.ajax({
             url: "https://api.mypurecloud.ie/api/v2/users/me",
@@ -20,6 +42,8 @@
             beforeSend: function(xhr){xhr.setRequestHeader('Authorization', 'bearer ' + token);},
             success: function(data) {
                 console.log(data);
+                console.log("------------- VERSION 1");
+                console.log("----------------USUARIO ACTUAL: " + data.name);
             }
         });
 
@@ -28,7 +52,7 @@
     } else {
         var queryStringData = {
             response_type : "token",
-            client_id : "31d75368-aa62-4ca8-b7e9-c939b1308c9b",
+            client_id : clientId,
             redirect_uri : "https://bcroche.github.io/index_v2.html"
         }
 
