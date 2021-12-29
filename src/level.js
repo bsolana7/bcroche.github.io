@@ -21,15 +21,30 @@ export default class Level extends Phaser.Scene {
    * Creación de los elementos de la escena principal de juego
    */
   create() {
+    //this.cameras.main.setBounds(0, 0, 200, 500);
+    let { width, height } = this.sys.game.canvas;
+    this.cameras.main.setViewport(0, 0, width/2, height);
     this.stars = 10;
     this.bases = this.add.group();
-    this.player = new Player(this, 200, 300);
+    
+    
+    let graphics= this.add.graphics();
+    graphics.fillStyle(0x00FF00,1);
+    graphics.lineStyle(5, 0xFF00FF, 1.0);
+    graphics.strokeRect(0,5,width,height-5);
+
 
     new Platform(this, this.player, this.bases, 150, 350);
     new Platform(this, this.player, this.bases, 850, 350);
     new Platform(this, this.player, this.bases, 500, 200);
     new Platform(this, this.player, this.bases, 150, 100);
     new Platform(this, this.player, this.bases, 850, 100);
+    new Platform(this, this.player, this.bases, 1000, 100);
+    new Platform(this, this.player, this.bases, 1300, 100);
+    new Platform(this, this.player, this.bases, 1700, 100);
+
+    this.player = new Player(this, 200, height);
+    this.cameras.main.startFollow(this.player, false, 1,1,0,height/2 - (this.player.height/2)-3);
     this.spawn();
   }
 
