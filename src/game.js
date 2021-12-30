@@ -1,6 +1,7 @@
 import Boot from './boot.js';
 import End from './end.js';
 import Level from './level.js';
+import MiLevel from './milevel.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -9,13 +10,13 @@ import Level from './level.js';
 let config = {
     type: Phaser.AUTO,
     width:  2000,
-    height: 700,
+    height: 500,
     scale: {
         // mode: Phaser.Scale.FIT,  
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
     pixelArt: true,
-    scene: [Boot, Level, End],
+    scene: [Boot, Level, MiLevel ,End],
     physics: { 
         default: 'arcade', 
         arcade: { 
